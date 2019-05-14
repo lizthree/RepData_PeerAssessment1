@@ -1,13 +1,3 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
-
-
-## Loading and preprocessing the data
-``` {r}
 library(ggplot2)
 file <- file.path("activity.zip")
 
@@ -24,11 +14,6 @@ if (file.exists(file)){
 data_na <- read.csv(file.path("./data","activity.csv"))
 data <- na.omit(data_na)
 data$date <- as.Date(data$date)
-```
-
-
-## What is mean total number of steps taken per day?
-``` {r}
 steps_per_day <- aggregate(steps ~ date, data, sum)
 ggplot(steps_per_day, aes(x=steps)) + geom_histogram(position = "identity", binwidth = 300) +
   scale_x_continuous(breaks = round(seq(0, 22000, by = 2500),1)) +
@@ -37,12 +22,7 @@ ggplot(steps_per_day, aes(x=steps)) + geom_histogram(position = "identity", binw
 
 mean_steps <- mean(steps_per_day$steps)
 median_steps <- median(steps_per_day$steps)
-```
-The mean steps per day is `r mean_steps`.
-The median steps per day is `r median_steps`.
 
-## What is the average daily activity pattern?
-``` {r}
 # convert interval to time
 data$interval <- sprintf("%04s", data$interval)
 
@@ -60,25 +40,16 @@ ggplot(mean_step_by_int, aes(x = num_interval, y = steps)) + geom_line() +
   xlab(label = "Time (24hr)")
 
 max_mean_int <- mean_step_by_int[max(mean_step_by_int$steps),]$interval
-  
-```
 
-
-## Imputing missing values
-``` {r}
 data_impute <- data_na
 sum(is.na(data_impute$steps))
-temp$steps <- data_na$steps
+temp <- data_na$steps
 
-for (i in nrow(data_impute$steps)){
-  print(i)
-  temp[i,"steps"] <- ifelse(is.na(data_impute[i,"steps"]), 
-             mean_step_by_int$steps[match(data_impute[i,"interval"], mean_step_by_int[,"interval"])],
-             data_impute[i,"steps"])
+for (i in 1:nrow(data_impute)){
+  if(is.na(data_impute[i,"steps"])){
+    print(mean_step_by_int$steps[match(data_impute[i,"interval"], mean_step_by_int[,"interval"])])
+  }
+  temp[i] <- ifelse(is.na(data_impute[i,"steps"]), 
+                            mean_step_by_int$steps[match(data_impute[i,"interval"], mean_step_by_int[,"interval"])],
+                            data_impute[i,"steps"])
 }
-
-
-```
-
-
-## Are there differences in activity patterns between weekdays and weekends?
