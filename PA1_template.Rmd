@@ -11,6 +11,7 @@ output:
 library(ggplot2)
 library(dplyr)
 options(scipen=999)
+knitr::opts_chunk$set(fig.path="figure/")
 ```
 ``` {r files}
 # download straight from the source

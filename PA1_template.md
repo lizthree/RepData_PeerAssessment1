@@ -39,7 +39,7 @@ ggplot(steps_per_day, aes(x=steps)) + geom_histogram(position = "identity", binw
   labs(x = "Steps per day", y = "Count")
 ```
 
-![](PA1_template_files/figure-html/steps_per_day-1.png)<!-- -->
+![](figure/steps_per_day-1.png)<!-- -->
 
 ```r
 mean_steps <- ceiling(mean(steps_per_day$steps))
@@ -70,7 +70,7 @@ ggplot(mean_step_by_int, aes(x = num_interval, y = steps)) + geom_line() +
   xlab(label = "Time (24hr)")
 ```
 
-![](PA1_template_files/figure-html/avg_daily-1.png)<!-- -->
+![](figure/avg_daily-1.png)<!-- -->
 
 On average, 1705 was the interval of time (24hr) with the most steps to occur during the day.
 
@@ -94,7 +94,7 @@ ggplot(data_impute_agg, aes(x=steps)) + geom_histogram(position = "identity", bi
   labs(x = "Steps", y = "Count")
 ```
 
-![](PA1_template_files/figure-html/impute_plot-1.png)<!-- -->
+![](figure/impute_plot-1.png)<!-- -->
 
 
 The data was imputed by replacing the 2304 NAs from the original dataset with the mean steps taken from the same time interval from the rest of the data.
@@ -122,4 +122,4 @@ ggplot(days_agg, aes(x = num_interval, y = steps, color = day)) + geom_line() +
   xlab(label = "Time (24hr)")
 ```
 
-![](PA1_template_files/figure-html/weekdays-1.png)<!-- -->
+![](figure/weekdays-1.png)<!-- -->
