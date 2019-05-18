@@ -12,7 +12,7 @@ library(ggplot2)
 library(dplyr)
 options(scipen=999)
 ```
-``` {r}
+``` {r files}
 # download straight from the source
 file <- file.path("activity.zip")
 if (!file.exists(file)){
@@ -33,7 +33,7 @@ data$date <- as.Date(data$date)
 
 
 ## What is mean total number of steps taken per day?
-``` {r}
+``` {r steps_per_day}
 steps_per_day <- aggregate(steps ~ date, data, sum)
 ggplot(steps_per_day, aes(x=steps)) + geom_histogram(position = "identity", binwidth = 300) +
   scale_x_continuous(breaks = round(seq(0, 22000, by = 2500),1)) +
@@ -49,7 +49,7 @@ The median steps per day is `r median_steps`.
 
 
 ## What is the average daily activity pattern?
-``` {r}
+``` {r avg_daily}
 # Merge with your date
 data$time <- as.POSIXct(paste(data$date, " ", sprintf("%04s", data$interval)), format = "%Y-%m-%d %H%M")
 data$num_interval <- as.numeric(data$interval)
@@ -76,7 +76,7 @@ data_impute <- data_na
 nas_before <- sum(is.na(data_impute$steps))
 ```
 
-```{r}
+```{r impute_plot}
 # impute NAs in by replacing with the mean of the interval of all the days
 for (i in 1:nrow(data_impute)){
   data_impute[i,"steps"] <- ifelse(is.na(data_impute[i,"steps"]), 
@@ -103,7 +103,7 @@ The median steps  with <b>imputed data</b> per day is `r median_steps_impute` co
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
-``` {r}
+``` {r weekdays}
 # create new column with weekdays
 data$weekdays <- weekdays(data$date)
 
