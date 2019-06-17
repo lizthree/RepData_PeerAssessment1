@@ -1,14 +1,7 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-author: "Liz Anderson"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
+By Liz Anderson
+
 ## Loading and preprocessing the data
-
-
-
 ```r
 # download straight from the source
 file <- file.path("activity.zip")
@@ -30,7 +23,6 @@ data$date <- as.Date(data$date)
 
 
 ## What is mean total number of steps taken per day?
-
 ```r
 steps_per_day <- aggregate(steps ~ date, data, sum)
 ggplot(steps_per_day, aes(x=steps)) + geom_histogram(position = "identity", binwidth = 300) +
